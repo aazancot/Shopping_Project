@@ -1,0 +1,551 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7D42D183-BFEB-419C-8B74-73D328540D48}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>PL</RootNamespace>
+    <AssemblyName>PL</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.3.8.0\lib\net462\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.MachineLearning, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.MachineLearning.3.8.0\lib\net462\Accord.MachineLearning.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Statistics.3.8.0\lib\net462\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=2.0.1.2556, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.2.0.1\lib\net452\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=4.1.0.2556, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.4.1.0\lib\net452\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Panteam.MetroChart, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\Panteam.MetroChart.1.0.1\lib\net40\Panteam.MetroChart.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Base, Version=19.2460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Compression.Base.19.2.0.56\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=19.2460.0.56, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.19.2.0.56\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=19.2460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.Wpf.19.2.0.56\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfChart.WPF, Version=19.2460.0.51, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.SfChart.WPF.19.2.0.51\lib\net46\Syncfusion.SfChart.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Analytics\AnalyticsByCategory\AnalyticsByCategoryModel.cs" />
+    <Compile Include="Analytics\AnalyticsByCategory\AnalyticsByCategoryView.xaml.cs">
+      <DependentUpon>AnalyticsByCategoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analytics\AnalyticsByCategory\AnalyticsByCategoryViewModel.cs" />
+    <Compile Include="Analytics\AnalyticsByCategory\CarouselCategories\CarouselControl.cs" />
+    <Compile Include="Analytics\AnalyticsByCategory\CarouselCategories\ICarouselControl.cs" />
+    <Compile Include="Analytics\AnalyticsByCategory\CarouselCategories\MainViewModel.cs" />
+    <Compile Include="Analytics\AnalyticsByCategory\CarouselCategories\RadioStation.cs" />
+    <Compile Include="Analytics\AnalyticsByItems\AnalyticsByItemsModel.cs" />
+    <Compile Include="Analytics\AnalyticsByItems\AnalyticsByItemsView.xaml.cs">
+      <DependentUpon>AnalyticsByItemsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analytics\AnalyticsByItems\AnalyticsByItemsViewModel.cs" />
+    <Compile Include="Analytics\AnalyticsByStores\AnalyticsByStoresModel.cs" />
+    <Compile Include="Analytics\AnalyticsByStores\AnalyticsByStoresView.xaml.cs">
+      <DependentUpon>AnalyticsByStoresView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analytics\AnalyticsByStores\AnalyticsByStoresViewModel.cs" />
+    <Compile Include="Analytics\AnalyticsByTotal\AnalyticsByTotalModel.cs" />
+    <Compile Include="Analytics\AnalyticsByTotal\AnalyticsByTotalView.xaml.cs">
+      <DependentUpon>AnalyticsByTotalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analytics\AnalyticsByTotal\AnalyticsByTotalViewModel.cs" />
+    <Compile Include="Analytics\ChartModel.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\DeleteProductOrderCommand.cs" />
+    <Compile Include="Commands\ValidateProductOrderCommand.cs" />
+    <Compile Include="Converters\BarCodeToDescription.cs" />
+    <Compile Include="Converters\BarCodeToImageFile.cs" />
+    <Compile Include="Converters\BarCodeToProductName.cs" />
+    <Compile Include="Converters\ListProductOrdersToTotalPrice.cs" />
+    <Compile Include="Converters\StoreIdToStoreCityStoreName.cs" />
+    <Compile Include="Orders History\OrdersHistoryModel.cs" />
+    <Compile Include="Orders History\OrdersHistoryView.xaml.cs">
+      <DependentUpon>OrdersHistoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Orders History\OrdersHistoryViewModel.cs" />
+    <Compile Include="Purchases Validation\PurchasesValidationModel.cs" />
+    <Compile Include="Purchases Validation\PurchasesValidationView.xaml.cs">
+      <DependentUpon>PurchasesValidationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Purchases Validation\PurchasesValidationViewModel.cs" />
+    <Compile Include="Recommendations\RecommendationsModel.cs" />
+    <Compile Include="Recommendations\RecommendationsView.xaml.cs">
+      <DependentUpon>RecommendationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Recommendations\RecommendationsViewModel.cs" />
+    <Compile Include="Test\ChartModel.cs" />
+    <Compile Include="Test\ChartTestUC.xaml.cs">
+      <DependentUpon>ChartTestUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Test\TestModel.cs" />
+    <Compile Include="Test\TestUC.xaml.cs">
+      <DependentUpon>TestUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Test\TestViewModel.cs" />
+    <Page Include="Analytics\AnalyticsByCategory\AnalyticsByCategoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analytics\AnalyticsByCategory\CarouselCategories\ResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analytics\AnalyticsByCategory\Dictionary1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Analytics\AnalyticsByItems\AnalyticsByItemsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analytics\AnalyticsByItems\Dictionary1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Analytics\AnalyticsByStores\AnalyticsByStoresView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analytics\AnalyticsByStores\Dictionary1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Analytics\AnalyticsByTotal\AnalyticsByTotalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analytics\AnalyticsByTotal\Dictionary1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Orders History\Dictionary1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Orders History\OrdersHistoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Purchases Validation\PurchasesValidationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Recommendations\Dictionary1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Recommendations\RecommendationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\ChartTestUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\Dictionary1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Test\TestUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BE\BE.csproj">
+      <Project>{f4c85793-99fa-4090-a128-d2a28e7a3827}</Project>
+      <Name>BE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BL\BL.csproj">
+      <Project>{a84b832e-3518-44ca-bd93-da4099e80c15}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\logoShop.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Orders History\ordersHistoryLogo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Purchases Validation\purchasesValidationLogo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\7.jpg" />
+    <Resource Include="Pictures\8.jpg" />
+    <Resource Include="Pictures\9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\10.jpg" />
+    <Resource Include="Pictures\11.jpg" />
+    <Resource Include="Pictures\12.jpg" />
+    <Resource Include="Pictures\13.jpg" />
+    <Resource Include="Pictures\14.jpg" />
+    <Resource Include="Pictures\15.jpg" />
+    <Resource Include="Pictures\16.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\17.jpg" />
+    <Resource Include="Pictures\18.jpg" />
+    <Resource Include="Pictures\19.jpg" />
+    <Resource Include="Pictures\20.jpg" />
+    <Resource Include="Pictures\21.jpg" />
+    <Resource Include="Pictures\22.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\23.jpg" />
+    <Resource Include="Pictures\24.jpg" />
+    <Resource Include="Pictures\25.jpg" />
+    <Resource Include="Pictures\26.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\27.jpg" />
+    <Resource Include="Pictures\28.jpg" />
+    <Resource Include="Pictures\29.jpg" />
+    <Resource Include="Pictures\30.jpg" />
+    <Resource Include="Pictures\31.jpg" />
+    <Resource Include="Pictures\32.jpg" />
+    <Resource Include="Pictures\33.jpg" />
+    <Resource Include="Pictures\34.jpg" />
+    <Resource Include="Pictures\35.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\36.jpg" />
+    <Resource Include="Pictures\37.jpg" />
+    <Resource Include="Pictures\38.jpg" />
+    <Resource Include="Pictures\39.jpg" />
+    <Resource Include="Pictures\40.jpg" />
+    <Resource Include="Pictures\41.jpg" />
+    <Resource Include="Pictures\42.jpg" />
+    <Resource Include="Pictures\43.jpg" />
+    <Resource Include="Pictures\44.jpg" />
+    <Resource Include="Pictures\45.jpg" />
+    <Resource Include="Pictures\46.jpg" />
+    <Resource Include="Pictures\47.jpg" />
+    <Resource Include="Pictures\48.jpg" />
+    <Resource Include="Pictures\49.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\50.jpg" />
+    <Resource Include="Pictures\51.jpg" />
+    <Resource Include="Pictures\52.jpg" />
+    <Resource Include="Pictures\53.jpg" />
+    <Resource Include="Pictures\54.jpg" />
+    <Resource Include="Pictures\55.jpg" />
+    <Resource Include="Pictures\56.jpg" />
+    <Resource Include="Pictures\57.jpg" />
+    <Resource Include="Pictures\58.jpg" />
+    <Resource Include="Pictures\59.jpg" />
+    <Resource Include="Pictures\60.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\100.jpg" />
+    <Resource Include="Pictures\101.jpg" />
+    <Resource Include="Pictures\102.jpg" />
+    <Resource Include="Pictures\103.jpg" />
+    <Resource Include="Pictures\104.jpg" />
+    <Resource Include="Pictures\105.jpg" />
+    <Resource Include="Pictures\106.jpg" />
+    <Resource Include="Pictures\107.jpg" />
+    <Resource Include="Pictures\108.jpg" />
+    <Resource Include="Pictures\109.jpg" />
+    <Resource Include="Pictures\110.jpg" />
+    <Resource Include="Pictures\111.jpg" />
+    <Resource Include="Pictures\112.jpg" />
+    <Resource Include="Pictures\113.jpg" />
+    <Resource Include="Pictures\114.jpg" />
+    <Resource Include="Pictures\115.jpg" />
+    <Resource Include="Pictures\116.jpg" />
+    <Resource Include="Pictures\117.jpg" />
+    <Resource Include="Pictures\118.jpg" />
+    <Resource Include="Pictures\119.jpg" />
+    <Resource Include="Pictures\120.jpg" />
+    <Resource Include="Pictures\121.jpg" />
+    <Resource Include="Pictures\122.jpg" />
+    <Resource Include="Pictures\123.jpg" />
+    <Resource Include="Pictures\124.jpg" />
+    <Resource Include="Pictures\125.jpg" />
+    <Resource Include="Pictures\126.jpg" />
+    <Resource Include="Pictures\127.jpg" />
+    <Resource Include="Pictures\128.jpg" />
+    <Resource Include="Pictures\129.jpg" />
+    <Resource Include="Pictures\130.jpg" />
+    <Resource Include="Pictures\131.jpg" />
+    <Resource Include="Pictures\132.jpg" />
+    <Resource Include="Pictures\133.jpg" />
+    <Resource Include="Pictures\134.jpg" />
+    <Resource Include="Pictures\135.jpg" />
+    <Resource Include="Pictures\136.jpg" />
+    <Resource Include="Pictures\137.jpg" />
+    <Resource Include="Pictures\138.jpg" />
+    <Resource Include="Pictures\139.jpg" />
+    <Resource Include="Pictures\140.jpg" />
+    <Resource Include="Pictures\141.jpg" />
+    <Resource Include="Pictures\142.jpg" />
+    <Resource Include="Pictures\143.jpg" />
+    <Resource Include="Pictures\144.jpg" />
+    <Resource Include="Pictures\145.jpg" />
+    <Resource Include="Pictures\146.jpg" />
+    <Resource Include="Pictures\147.jpg" />
+    <Resource Include="Pictures\148.jpg" />
+    <Resource Include="Pictures\149.jpg" />
+    <Resource Include="Pictures\150.jpg" />
+    <Resource Include="Pictures\151.jpg" />
+    <Resource Include="Pictures\152.jpg" />
+    <Resource Include="Pictures\153.jpg" />
+    <Resource Include="Pictures\154.jpg" />
+    <Resource Include="Pictures\155.jpg" />
+    <Resource Include="Pictures\156.jpg" />
+    <Resource Include="Pictures\157.jpg" />
+    <Resource Include="Pictures\158.jpg" />
+    <Resource Include="Pictures\159.jpg" />
+    <Resource Include="Pictures\160.jpg" />
+    <Resource Include="Pictures\161.jpg" />
+    <Resource Include="Pictures\162.jpg" />
+    <Resource Include="Pictures\163.jpg" />
+    <Resource Include="Pictures\164.jpg" />
+    <Resource Include="Pictures\165.jpg" />
+    <Resource Include="Pictures\166.jpg" />
+    <Resource Include="Pictures\167.jpg" />
+    <Resource Include="Pictures\168.jpg" />
+    <Resource Include="Pictures\169.jpg" />
+    <Resource Include="Pictures\170.jpg" />
+    <Resource Include="Pictures\171.jpg" />
+    <Resource Include="Pictures\172.jpg" />
+    <Resource Include="Pictures\173.jpg" />
+    <Resource Include="Pictures\174.jpg" />
+    <Resource Include="Pictures\175.jpg" />
+    <Resource Include="Pictures\176.jpg" />
+    <Resource Include="Pictures\177.jpg" />
+    <Resource Include="Pictures\178.jpg" />
+    <Resource Include="Pictures\179.jpg" />
+    <Resource Include="Pictures\180.jpg" />
+    <Resource Include="Pictures\181.jpg" />
+    <Resource Include="Pictures\182.jpg" />
+    <Resource Include="Pictures\183.jpg" />
+    <Resource Include="Pictures\184.jpg" />
+    <Resource Include="Pictures\185.jpg" />
+    <Resource Include="Pictures\186.jpg" />
+    <Resource Include="Pictures\187.jpg" />
+    <Resource Include="Pictures\188.jpg" />
+    <Resource Include="Pictures\189.jpg" />
+    <Resource Include="Pictures\190.jpg" />
+    <Resource Include="Pictures\191.jpg" />
+    <Resource Include="Pictures\192.jpg" />
+    <Resource Include="Pictures\193.jpg" />
+    <Resource Include="Pictures\194.jpg" />
+    <Resource Include="Pictures\195.jpg" />
+    <Resource Include="Pictures\196.jpg" />
+    <Resource Include="Pictures\197.jpg" />
+    <Resource Include="Pictures\198.jpg" />
+    <Resource Include="Pictures\199.jpg" />
+    <Resource Include="Pictures\200.jpg" />
+    <Resource Include="Pictures\201.jpg" />
+    <Resource Include="Pictures\202.jpg" />
+    <Resource Include="Pictures\203.jpg" />
+    <Resource Include="Pictures\204.jpg" />
+    <Resource Include="Pictures\205.jpg" />
+    <Resource Include="Pictures\206.jpg" />
+    <Resource Include="Pictures\61.jpg" />
+    <Resource Include="Pictures\62.jpg" />
+    <Resource Include="Pictures\63.jpg" />
+    <Resource Include="Pictures\64.jpg" />
+    <Resource Include="Pictures\65.jpg" />
+    <Resource Include="Pictures\66.jpg" />
+    <Resource Include="Pictures\67.jpg" />
+    <Resource Include="Pictures\68.jpg" />
+    <Resource Include="Pictures\69.jpg" />
+    <Resource Include="Pictures\70.jpg" />
+    <Resource Include="Pictures\71.jpg" />
+    <Resource Include="Pictures\72.jpg" />
+    <Resource Include="Pictures\73.jpg" />
+    <Resource Include="Pictures\74.jpg" />
+    <Resource Include="Pictures\75.jpg" />
+    <Resource Include="Pictures\76.jpg" />
+    <Resource Include="Pictures\77.jpg" />
+    <Resource Include="Pictures\78.jpg" />
+    <Resource Include="Pictures\79.jpg" />
+    <Resource Include="Pictures\80.jpg" />
+    <Resource Include="Pictures\81.jpg" />
+    <Resource Include="Pictures\82.jpg" />
+    <Resource Include="Pictures\83.jpg" />
+    <Resource Include="Pictures\84.jpg" />
+    <Resource Include="Pictures\85.jpg" />
+    <Resource Include="Pictures\86.jpg" />
+    <Resource Include="Pictures\87.jpg" />
+    <Resource Include="Pictures\88.jpg" />
+    <Resource Include="Pictures\89.jpg" />
+    <Resource Include="Pictures\90.jpg" />
+    <Resource Include="Pictures\91.jpg" />
+    <Resource Include="Pictures\92.jpg" />
+    <Resource Include="Pictures\93.jpg" />
+    <Resource Include="Pictures\94.jpg" />
+    <Resource Include="Pictures\95.jpg" />
+    <Resource Include="Pictures\96.jpg" />
+    <Resource Include="Pictures\97.jpg" />
+    <Resource Include="Pictures\98.jpg" />
+    <Resource Include="Pictures\99.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Welcome Page Pictures\step1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Welcome Page Pictures\arrow.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Welcome Page Pictures\step5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Welcome Page Pictures\step3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Welcome Page Pictures\step2.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\MaterialDesignThemes.4.1.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MaterialDesignThemes.4.1.0\build\MaterialDesignThemes.targets'))" />
+    <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\MaterialDesignThemes.4.1.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.1.0\build\MaterialDesignThemes.targets')" />
+  <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
+</Project>

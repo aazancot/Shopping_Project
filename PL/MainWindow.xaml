@@ -1,0 +1,464 @@
+﻿<Window x:Class="PL.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="Analytics Shop" Height="800" Width="1350"  Icon="C:\Shopping_Project\Help pictures/LogoShopZoom.jpg"  AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="Transparent">
+
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" SnapsToDevicePixels="true" StrokeThickness="1" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="White"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="White"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="White"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Foreground" Color="Black"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="White"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="White"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="White"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="White"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="White"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontFamily" Value="Nirmala UI"/>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.MouseOver.Foreground}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+        <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Grid x:Name="Grid">
+                            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Fill="Transparent" />
+                            <Border x:Name="Rectangle1" CornerRadius="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto"  
+                                        Background="{TemplateBinding Background}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Horizontal">
+                                <Setter TargetName="Rectangle1" Property="Width" Value="Auto" />
+                                <Setter TargetName="Rectangle1" Property="Height" Value="7" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--ScrollBars-->
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+            <Setter Property="Foreground" Value="LightGray" />
+            <Setter Property="Background" Value="DarkGray" />
+            <Setter Property="Width" Value="10" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid x:Name="GridRoot" Width="19" Background="{x:Null}">
+                            <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="false">
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false" />
+                                </Track.DecreaseRepeatButton>
+                            </Track>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                                <Setter Value="{DynamicResource ButtonSelectBrush}" TargetName="Thumb" Property="Background" />
+                            </Trigger>
+                            <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                                <Setter Value="{DynamicResource DarkBrush}" TargetName="Thumb" Property="Background" />
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Width" Value="Auto" />
+                                <Setter Property="Height" Value="12" />
+                                <Setter TargetName="Thumb" Property="Tag" Value="Horizontal" />
+                                <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
+                                <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+        <!-- style a top level menu item -->
+        <ControlTemplate x:Key="VsMenuTop" TargetType="MenuItem">
+            <StackPanel TextBlock.FontSize="18px"  Height="55" Orientation="Horizontal" TextBlock.FontFamily="Nirmala UI" Width="247" 
+                        TextBlock.FontWeight="Bold" Margin="0,0,0,-11" >
+
+
+                <!-- label, icons, etc. -->
+                <materialDesign:PackIcon Kind="ChartBar" VerticalAlignment="Center" Width="30" Height="40" Margin="10,0,0,0"/>
+                <Label Content="{TemplateBinding Header}"  Width="175" Foreground="#FF5B5A5A" FontWeight="Bold" FontSize="18" Padding="15,0,0,0" VerticalAlignment="Center"/>
+                <materialDesign:PackIcon Kind="ChevronDown" Height="23"   Width="22" VerticalAlignment="Center" />
+
+
+                <!-- sub items -->
+                <Popup IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" HorizontalAlignment="Center">
+                    <Border BorderThickness="1" Background="LightGray" BorderBrush="#E0E0E0">
+                        <StackPanel IsItemsHost="True" />
+                    </Border>
+                </Popup>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver"  Value="True">
+                                <Setter Property="Background" Value="White" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+            </StackPanel>
+        </ControlTemplate>
+
+
+        <!-- some base stuff -->
+        <Style TargetType="Menu">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Height" Value="50px" />
+        </Style>
+
+
+        <!-- style a non-top level menu item -->
+        <ControlTemplate x:Key="VsMenuSub" TargetType="MenuItem">
+            <Border >
+
+                <DockPanel TextBlock.FontSize="16px" x:Name="panel"  TextBlock.FontFamily="Nirmala UI" TextBlock.Foreground= "#FF5B5A5A">
+
+
+                    <!-- label, icons, etc. -->
+                    <materialDesign:PackIcon Kind="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" Width="30" Height="40" Margin="10,0,0,0"/>
+                    <Label Content="{TemplateBinding Header}" Foreground="#FF5B5A5A"  Width="200" Padding="15,0,0,0" VerticalAlignment="Center" 
+                       FontWeight="SemiBold" HorizontalAlignment="Left"/>
+
+
+                    <!-- sub items -->
+                    <Popup IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" Placement="Right" >
+                        <Border BorderThickness="1" Background="LightGray" BorderBrush="#E0E0E0">
+                            <StackPanel IsItemsHost="True" />
+                        </Border>
+                    </Popup>
+                </DockPanel>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter Property="Background" TargetName="panel" Value="White" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <!-- style the separator -->
+        <ControlTemplate x:Key="VsMenuSep" TargetType="Separator">
+            <Border Height="1" Background="#E0E0E0" />
+        </ControlTemplate>
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <UserControl x:Name="MainUC" Grid.Column="1"  >
+            <UserControl.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFE4E4E4" Offset="1"/>
+                    <GradientStop Color="#FFEBEBEB"/>
+                </LinearGradientBrush>
+            </UserControl.Background>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0"  VerticalAlignment="Top" HorizontalAlignment="Center" Background="Transparent" Margin="0,70,0,0">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Welcome to the Analytics Shop desktop application" FontSize="40" FontFamily="Harrington" TextDecorations="{x:Null}"></TextBlock>
+
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="This software allows tracking and managing your purchases correctly" FontSize="20" FontStyle="Italic" FontFamily="Harrington" TextDecorations="{x:Null}"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+
+                <Border Grid.Row="1"  VerticalAlignment="Top" HorizontalAlignment="Center" Background="Transparent"   Height="200" Width="250" Margin="0,10,0,0" CornerRadius="15" >
+
+                    <Rectangle Height="200" VerticalAlignment="Center" RadiusX="15"  RadiusY="15">
+                        <Rectangle.Effect>
+                            <DropShadowEffect Direction="0" BlurRadius="20"  ShadowDepth="1" RenderingBias="Quality"  Color="#FFE4E4E4"/>
+                        </Rectangle.Effect>
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="Welcome Page Pictures/step1.jpg" Opacity="0.4"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                </Border>
+                <materialDesign:PackIcon Kind="CheckBold" VerticalAlignment="Center" Width="81" Height="78" Margin="589,15,0,527" Foreground="Green" Opacity="0.4" Grid.Row="1"/>
+
+                <TextBlock Grid.Row="1" FontSize="16" Margin="439,212,437.8,351" FontWeight="DemiBold" FontFamily="MV Boli" >
+                    <Run Text= "Scan the product's QR code" ></Run> 
+                    <LineBreak/> 
+                    <Run Text="      and validate it"   ></Run>
+                </TextBlock>
+
+
+
+
+                <StackPanel VerticalAlignment="Top"  HorizontalAlignment="Left" Grid.Row="1" Height="80" Width="170" Margin="170,85,0,0"  >
+                    <StackPanel.Effect>
+                        <DropShadowEffect Direction="0" BlurRadius="20"  ShadowDepth="0.5" RenderingBias="Quality"  Color="LightGray"/>
+                    </StackPanel.Effect>
+                    <materialDesign:PackIcon Kind="ArrowDownLeftBold" VerticalAlignment="Center" Width="170" Height="80" Foreground="#FFB91917" Opacity="0.7"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Top"  HorizontalAlignment="Right" Grid.Row="1" Height="80" Width="170" Margin="0,85,170,0" >
+                    <StackPanel.Effect>
+                        <DropShadowEffect Direction="0" BlurRadius="20"  ShadowDepth="0.5" RenderingBias="Quality"  Color="LightGray"/>
+                    </StackPanel.Effect>
+                    <materialDesign:PackIcon Kind="ArrowDownRightBold" VerticalAlignment="Center" Width="170" Height="80" Foreground="#FFB91917" Opacity="0.7"/>
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Top"  HorizontalAlignment="Center" Grid.Row="1" Height="75" Width="150" Margin="0,260,0,0"  >
+                    <StackPanel.Effect>
+                        <DropShadowEffect Direction="0" BlurRadius="20"  ShadowDepth="0.5" RenderingBias="Quality"  Color="LightGray"/>
+                    </StackPanel.Effect>
+                    <materialDesign:PackIcon Kind="ArrowDownThick" VerticalAlignment="Center" Width="150" Height="75" Foreground="#FFB91917" Opacity="0.7"/>
+                </StackPanel>
+
+                <Border Grid.Row="1"  VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent"  Margin="100,200,0,0" Height="200" Width="250" >
+
+                    <Rectangle Height="200" VerticalAlignment="Center" RadiusX="15" RadiusY="15" >
+                        <Rectangle.Effect>
+                            <DropShadowEffect Direction="0" BlurRadius="20"  ShadowDepth="1" RenderingBias="Quality"  Color="LightGray"/>
+                        </Rectangle.Effect>
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="Welcome Page Pictures/step2.jpg" Opacity="0.5"/>
+
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Border>
+                <TextBlock Grid.Row="1" FontSize="16" Margin="94,408,746.8,151" FontWeight="DemiBold" FontFamily="MV Boli">
+                    <Run Text= "Look at your shopping's history" ></Run> 
+                    <LineBreak/> 
+                    <Run Text="  at anytime that you choose"   ></Run>
+
+                </TextBlock>
+
+
+                <Border Grid.Row="1"  VerticalAlignment="Center" HorizontalAlignment="Center" Background="Transparent"  Height="200" Width="250" Margin="0,250,0,0"  >
+
+                    <Rectangle Height="200" VerticalAlignment="Center" RadiusX="15" RadiusY="15" >
+                        <Rectangle.Effect>
+                            <DropShadowEffect Direction="0" BlurRadius="20"  ShadowDepth="1" RenderingBias="Quality"  Color="#FFE4E4E4"/>
+                        </Rectangle.Effect>
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="Welcome Page Pictures/step3.jpg" Opacity="0.5"/>
+
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Border>
+                <TextBlock Grid.Row="1" FontSize="16" Margin="429,539,423.8,23" FontWeight="DemiBold" FontFamily="MV Boli" >
+             
+                    <Run Text= "Manage your shopping expenses" ></Run> 
+                    <LineBreak/> 
+                    <Run Text=" thanks to useful statistics "   ></Run>
+                </TextBlock>
+
+
+
+
+                <Border Grid.Row="1"  VerticalAlignment="Top" HorizontalAlignment="Right" Background="Transparent"  Margin="0,200,100,0" Height="200" Width="250" >
+                    <Rectangle Height="200" VerticalAlignment="Center" RadiusX="15" RadiusY="15"  >
+                        <Rectangle.Effect>
+                            <DropShadowEffect Direction="0" BlurRadius="20"  ShadowDepth="1" RenderingBias="Quality"  Color="#FFE4E4E4"/>
+                        </Rectangle.Effect>
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="Welcome Page Pictures/step5.jpg" Opacity="0.4"/>
+
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Border>
+                <TextBlock Grid.Row="1" FontSize="16" Margin="745,410,79.8,147" FontWeight="DemiBold" FontFamily="MV Boli" >
+                    <Run Text= "  Get suggestions for your next" ></Run> 
+                    <LineBreak/> 
+                    <Run Text=" order based on previous purchases"   ></Run>
+                </TextBlock>
+
+
+                <materialDesign:PackIcon Kind="AccountSupervisorCircle" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="58" Height="56"  Opacity="0.5" Grid.Row="1" Margin="0,0,249.8,28" />
+                <StackPanel Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="250" Margin="0,0,0,30" >
+                    <TextBlock  Text="JCT - .NET Project" HorizontalAlignment="Center"  Width="172" FontSize="18" FontFamily="Nirmala UI"  Foreground="#FF5B5A5A" FontWeight="Bold">
+
+                    </TextBlock>
+                    <TextBlock  Text="Avital Haziza and Anna Zerbib" FontSize="17"  FontFamily="Nirmala UI" Foreground="#FF5B5A5A" FontWeight="DemiBold" />
+                </StackPanel>
+
+
+
+
+
+            </Grid>
+        </UserControl>
+
+
+
+        <Grid Grid.Column="0" Background="LightGray" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+            </Grid.Effect>
+
+
+            <Grid>
+                <StackPanel Orientation='Vertical' >
+                    <Rectangle Height="170" VerticalAlignment="Top"  >
+                        <Rectangle.Effect>
+                            <DropShadowEffect Direction="0" BlurRadius="15" ShadowDepth="1" RenderingBias="Quality" Color="LightGray"/>
+                        </Rectangle.Effect>
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="Pictures/LogoShop.jpg" Opacity="0.2"/>
+
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Border CornerRadius="15" Background="#FFDFDDDD">
+                        <TextBlock Text="Analytics Shop"  FontStyle="Italic" FontWeight="Bold"  TextAlignment="Center" FontSize="20" Height="30" Foreground="#FFB91917" OpacityMask="Black" Background="Transparent" >
+
+                        </TextBlock>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel   Grid.Row="1"  Margin="0,70,0,30.6">
+                <Grid Height="50" Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CartArrowDown" VerticalAlignment="Center" Width="30" Height="40" Margin="10,0,0,0" />
+                        <Button Content="Purchases Validation" Padding="15,0,0,0" FontWeight="Bold" Width="210"  HorizontalContentAlignment="Left" 
+                                Grid.IsSharedSizeScope="True" 
+                                BorderBrush="{x:Null}" Background="{x:Null}" Style="{DynamicResource ButtonStyle1}" 
+                                Foreground="#FF5B5A5A" FontFamily="Nirmala UI"  Click="ButtonPurchasesValidation"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Height="50" Margin="0,10,0,0" >
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="FileClockOutline" VerticalAlignment="Center" Width="30" Height="40" Margin="10,0,0,0"/>
+                        <Button Content="Orders History" Padding="15,0,0,0" FontWeight="Bold" Width="210"  HorizontalContentAlignment="Left" Grid.IsSharedSizeScope="True" 
+                                BorderBrush="{x:Null}" Background="{x:Null}" Style="{DynamicResource ButtonStyle1}" 
+                                Foreground="#FF5B5A5A" FontFamily="Nirmala UI" 
+                                Click="ButtonOrdersHistory"/>
+                    </StackPanel>
+                </Grid>
+
+
+                <Menu IsMainMenu="True"  VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <MenuItem Template="{StaticResource VsMenuTop}" Header="Analytics" >
+                        <MenuItem Header="Products Statistics"  Icon="basket" Template="{StaticResource VsMenuSub}" Click="MenuItem_Click"  />
+                        <MenuItem Header="Stores Statistics" Icon="storefront" Template="{StaticResource VsMenuSub}" Click="MenuItem_Click"/>
+                        <MenuItem Header="Categories Statistics" Icon="hexagonmultiple" Template="{StaticResource VsMenuSub}" Click="MenuItem_Click" />
+                        <MenuItem Header="Purchase Costs Statistics" Icon="creditcardclockoutline" Template="{StaticResource VsMenuSub}" Click="MenuItem_Click" />
+                    </MenuItem>
+                </Menu>
+
+
+                <Grid Height="50" Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="HeartMultiple" VerticalAlignment="Center" Width="30" Height="40" Margin="10,0,0,0"/>
+                        <Button Content="Recommendations" Padding="15,0,0,0" FontWeight="Bold" Width="210" HorizontalContentAlignment="Left" Grid.IsSharedSizeScope="True" BorderBrush="{x:Null}" Background="{x:Null}" Style="{DynamicResource ButtonStyle1}"  Foreground="#FF5B5A5A" FontFamily="Nirmala UI" Click="ButtonRecommendations"/>
+                    </StackPanel>
+                </Grid>
+
+            </StackPanel>
+
+            <Grid Grid.Row="2" Height="50"  >
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="PowerSettings" VerticalAlignment="Center" Width="30" Height="40" Margin="10,5,0,-0.4" />
+                    <Button Content="Log Out" Padding="15,0,0,0" FontWeight="Bold" Width="210"  HorizontalContentAlignment="Left" Grid.IsSharedSizeScope="True" BorderBrush="{x:Null}" Background="{x:Null}" Style="{DynamicResource ButtonStyle1}" Foreground="#FF5B5A5A" FontFamily="Nirmala UI" Margin="0,0,0,-0.4" Height="50" VerticalAlignment="Top" Click="Button_Click"  />
+                </StackPanel>
+            </Grid>
+
+
+        </Grid>
+
+    </Grid>
+</Window>

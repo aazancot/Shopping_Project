@@ -1,0 +1,423 @@
+﻿<UserControl x:Class="PL.Analytics.AnalyticsByItems.AnalyticsByItemsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
+             xmlns:Converters="clr-namespace:PL.Converters"
+             xmlns:local="clr-namespace:PL.Analytics.AnalyticsByItems"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1100" >
+
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary  Source="Dictionary1.xaml"/>
+        
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <Style TargetType="Calendar" x:Key="myCalendar" >
+                
+            </Style>
+
+
+            <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Grid x:Name="Grid">
+                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Fill="Transparent" />
+                                <Border x:Name="Rectangle1" CornerRadius="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                        Width="Auto" Height="Auto"  Background="{TemplateBinding Background}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Tag" Value="Horizontal">
+                                    <Setter TargetName="Rectangle1" Property="Width" Value="Auto" />
+                                    <Setter TargetName="Rectangle1" Property="Height" Value="7" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!--ScrollBars-->
+            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+                <Setter Property="Foreground" Value="LightGray" />
+                <Setter Property="Background" Value="DarkGray" />
+                <Setter Property="Width" Value="10" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="GridRoot" Width="19" Background="{x:Null}">
+                                <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="false">
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false" />
+                                    </Track.DecreaseRepeatButton>
+                                </Track>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                                    <Setter Value="{DynamicResource ButtonSelectBrush}" TargetName="Thumb" Property="Background" />
+                                </Trigger>
+                                <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                                    <Setter Value="{DynamicResource DarkBrush}" TargetName="Thumb" Property="Background" />
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                                <Trigger Property="Orientation" Value="Horizontal">
+                                    <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Width" Value="Auto" />
+                                    <Setter Property="Height" Value="12" />
+                                    <Setter TargetName="Thumb" Property="Tag" Value="Horizontal" />
+                                    <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
+                                    <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <BooleanToVisibilityConverter x:Key="btv" />
+
+           
+
+
+            <!-- style a top level menu item -->
+            <ControlTemplate x:Key="VsMenuTop" TargetType="MenuItem">
+                <StackPanel TextBlock.FontSize="15px"  Height="45" Orientation="Horizontal" TextBlock.FontFamily="Georgia"  Opacity="0.9" >
+                    <StackPanel.Effect>
+                        <DropShadowEffect Color="Black" Opacity="0.9" ShadowDepth="3" RenderingBias="Quality" />
+                    </StackPanel.Effect>
+
+                    <!-- label, icons, etc. -->
+
+                    <materialDesign:PackIcon Kind="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}" Width="20" Margin="5,10"></materialDesign:PackIcon>
+                    <Label Content="{TemplateBinding Header}" Margin="5" Foreground="White" />
+                    <materialDesign:PackIcon Kind="ChevronDown" Height="20" Margin="0,10,5,0" Opacity="0.6" />
+                    <!-- sub items -->
+                    <Popup IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False">
+                        <Border BorderThickness="1" Background="#EFF2F8" BorderBrush="#E0E0E0">
+                            <StackPanel IsItemsHost="True" />
+                        </Border>
+                    </Popup>
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver"  Value="True">
+                                    <Setter Property="Background" Value="#106EBE" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                </StackPanel>
+            </ControlTemplate>
+
+            <!-- some base stuff -->
+            <Style TargetType="Menu">
+                <Setter Property="Background" Value="#FF59A5E4" />
+                <Setter Property="Height" Value="45px" />
+            </Style>
+
+
+            <!-- style a non-top level menu item -->
+            <ControlTemplate x:Key="VsMenuSub" TargetType="MenuItem">
+                <DockPanel TextBlock.FontSize="15px" x:Name="panel"  TextBlock.FontFamily="Nirmala UI" Opacity="0.9">
+
+                    <!-- label, icons, etc. -->
+                    <Label Content=""  />
+                    <Label Content="{TemplateBinding Header}" Foreground="Black" Margin="0,5,5,5" />
+
+
+                    <!-- sub items -->
+                    <Popup IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" Placement="Right" >
+                        <Border BorderThickness="1" Background="#EFF2F8" BorderBrush="#E0E0E0">
+                            <StackPanel IsItemsHost="True" />
+                        </Border>
+                    </Popup>
+                </DockPanel>
+                <ControlTemplate.Triggers>
+                    <!-- <Trigger Property="IsHighlighted" Value="True">
+                        <Setter Property="Background" TargetName="panel" Value="White" />
+                    </Trigger>  -->
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <!-- style the separator -->
+            <ControlTemplate x:Key="VsMenuSep" TargetType="Separator">
+                <Border Height="1" Background="#E0E0E0" />
+            </ControlTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+
+
+    <ScrollViewer >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="180"/>
+                <RowDefinition Height="185" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+
+            </Grid.ColumnDefinitions>
+
+
+            <!--> TITLES <!-->
+            <Grid Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="120,60,0,0" Background="Transparent">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="Products Statistics " FontSize="40" FontFamily="Harrington" TextDecorations="{x:Null}"></TextBlock>
+                        <materialDesign:PackIcon Kind="CalendarMonth" VerticalAlignment="Center" Height="40" Width="40" Margin="5 0" />
+                        <materialDesign:PackIcon Kind="Contrast" VerticalAlignment="Center" Height="40" Width="40" Margin="5 0"  />
+                        <materialDesign:PackIcon Kind="ChartBellCurveCumulative" VerticalAlignment="Center" Height="40" Width="40" Margin="5 0"  />
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Select a month and get the quantity of a purchased product" FontSize="20" FontStyle="Italic" FontFamily="Harrington" TextDecorations="{x:Null}"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+            </Grid>
+            <!--> TITLES <!-->
+
+            <!--MENU CATEGORY-->
+
+            <StackPanel Grid.Row="1" Grid.RowSpan="2">
+                <Menu IsMainMenu="True"  VerticalAlignment="Center" HorizontalAlignment="Center"  >
+
+
+                    <!--FOOD -->
+                    <MenuItem Header="Food" Template="{StaticResource VsMenuTop}" Icon="food" Click="MenuItem_Click" >
+
+                    </MenuItem>
+
+                    <!--BEAUTY -->
+                    <MenuItem Header="Beauty" Template="{StaticResource VsMenuTop}" Icon="lipstick" Click="MenuItem_Click">
+                    </MenuItem>
+                    
+                    
+
+                    <!--CLOTHES-->
+                    <MenuItem Header="Clothes" Template="{StaticResource VsMenuTop}" Icon="hanger" Click="MenuItem_Click">
+                    </MenuItem>
+
+
+
+                    <!--APPLIANCES -->
+                    <MenuItem Header="Appliances" Template="{StaticResource VsMenuTop}" Icon="lamps" Click="MenuItem_Click">
+                    </MenuItem>
+
+
+
+                    <!--MULTIMEDIA-->
+                    <MenuItem Header="Multimedia" Template="{StaticResource VsMenuTop}" Icon="desktopmac"  Click="MenuItem_Click">
+                    </MenuItem>
+
+                </Menu>
+            </StackPanel>
+
+            <ComboBox Name="cb"   Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="16"  Height="33"  FontWeight="DemiBold" 
+                      Background="#EFF2F8" Visibility="Collapsed" IsSynchronizedWithCurrentItem="True"
+                      SelectionChanged="cb_SelectionChanged" ItemsSource="{Binding}" >
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Background="#EFF2F8" Orientation="Vertical" ></StackPanel>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" Background="Transparent" ></TextBlock>
+                     
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+
+            </ComboBox>
+
+
+            <!-->CALENDAR <!-->
+            <Calendar x:Name="_calendar"  DisplayModeChanged="_calendar_DisplayModeChanged" 
+                   Grid.Column="1" Grid.RowSpan="2"
+                  Style="{StaticResource myCalendar}" 
+                  Height="251" VerticalAlignment="Top" Margin="0.4,110,0.2,0"   />
+
+            <!--GRAPHES-->
+
+
+            <Grid Background="#EFF2F8" Height="1200" Grid.Row="2" Grid.ColumnSpan="2">
+
+
+
+                <!--GRAPH 1-->
+
+                <!--We will create custom list-->
+
+                <Grid Grid.Row="2"   VerticalAlignment="Top" HorizontalAlignment="Left" Height="480" Width="595"  Margin="15,0,0,0" >
+                    <chart:SfChart3D  x:Name="Graph3D"       Foreground="#FF0C0101"  
+                          BackWallBrush="#FFE5CCCC" FontWeight="Bold" FontSize="14" Background="Transparent" >
+                        <chart:SfChart3D.Header>
+                            <Border BorderThickness="0.5" BorderBrush="Black" Margin ="15" CornerRadius="5">
+                                <TextBlock FontSize="15" Text="Daily Product Quantity" Margin="8"  FontWeight="Bold">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect Color="Black" 
+                                        Opacity="0.5" ShadowDepth="6" />
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                            </Border>
+                        </chart:SfChart3D.Header>
+
+
+
+                        <!--     <local:ChartTestUC x:Name="uc"   Grid.Row="1" HorizontalAlignment="Center" HeaderAxisX="xxxxx" HeaderAxisY="yyyyy" ChartHeader="chart header " Height="400" XSource="Month" YSource="Amount" ></local:ChartTestUC> -->
+
+
+                        <!--PrimaryAxis x-->
+                        <chart:SfChart3D.PrimaryAxis>
+                            <chart:CategoryAxis3D LabelRotationAngle="90" Header="Days In Month" >
+                                <chart:CategoryAxis3D.HeaderStyle>
+                                    <chart:LabelStyle FontFamily="Algerian" FontSize="11" Foreground="Black" >
+                                    </chart:LabelStyle>
+                                </chart:CategoryAxis3D.HeaderStyle>
+                            </chart:CategoryAxis3D>
+                        </chart:SfChart3D.PrimaryAxis>
+
+                        <!--SecondaryAxis y-->
+                        <chart:SfChart3D.SecondaryAxis >
+                            <chart:NumericalAxis3D  Header="Product Quantity">
+                                <chart:NumericalAxis3D.HeaderStyle>
+                                    <chart:LabelStyle FontFamily="Algerian" FontSize="11" Foreground="Black" >
+                                    </chart:LabelStyle>
+                                </chart:NumericalAxis3D.HeaderStyle>
+
+                            </chart:NumericalAxis3D>
+                        </chart:SfChart3D.SecondaryAxis>
+
+
+                        <chart:LineSeries3D Palette="SandyBeach"   
+                                XBindingPath="LabelX" StrokeThickness="1"  
+                                YBindingPath="LabelY" ShowTooltip="True" Interior="#FFF33A3A" x:Name="chartLineSeries" ItemsSource="{Binding series, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  >
+
+                            <chart:LineSeries3D.AdornmentsInfo>
+                                <chart:ChartAdornmentInfo3D ShowLabel="True" >
+                                </chart:ChartAdornmentInfo3D>
+                            </chart:LineSeries3D.AdornmentsInfo>
+                        </chart:LineSeries3D>
+
+                    </chart:SfChart3D>
+
+                </Grid>
+
+                <!--TABLE WEEKS-->
+                <Grid Grid.Row="2" HorizontalAlignment="Right"  VerticalAlignment="Top" Grid.Column="2" Background="Transparent"  Height="350" Margin="0,130,100,0">
+
+                    <DataGrid x:Name="amountPerWeeks" Background="Transparent" IsReadOnly="True" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" 
+                                  CanUserDeleteRows="False" CanUserResizeRows="False" CanUserReorderColumns="False"  BorderBrush="Black" FontSize="14" ItemsSource="{Binding series}"
+                                  AutoGenerateColumns="False" EnableRowVirtualization="False"   VerticalAlignment="Top" >
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Binding="{Binding LabelX}"
+                                                      FontSize="18" FontFamily="Georgia" FontWeight="DemiBold" Width="165" >
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="Weeks Range" FontSize="20" FontWeight="Bold" TextAlignment="Center" Foreground="Red"  HorizontalAlignment="Center" FontFamily="MV Boli">
+
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding LabelY}"    
+                                                     FontSize="18" FontFamily="Georgia" FontWeight="DemiBold" Width="SizeToHeader">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="Count" FontSize="20" FontWeight="Bold" TextAlignment="Center" Foreground="Red" HorizontalAlignment="Center" FontFamily="MV Boli">
+
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+
+                <!--GRAPH 2-->
+
+                <Grid Grid.Row="2"   VerticalAlignment="Center" HorizontalAlignment="Left" Height="480" Width="595"  Margin="15,400,0,0">
+                    <chart:SfChart3D x:Name="Histogram3D" Foreground="#FF0C0101" 
+                          BackWallBrush="#FFE5CCCC" FontWeight="Bold" FontSize="14" Background="Transparent" >
+                        <chart:SfChart3D.Header>
+                            <Border BorderThickness="0.5" BorderBrush="Black" Margin ="5" CornerRadius="5">
+                                <TextBlock FontSize="15" Text="Monthly Product Quantity" Margin="8"  FontWeight="Bold">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect Color="Black" 
+                                        Opacity="0.5" ShadowDepth="6" />
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                            </Border>
+                        </chart:SfChart3D.Header>
+
+                        <!--PrimaryAxis x-->
+                        <chart:SfChart3D.PrimaryAxis>
+                            <chart:CategoryAxis3D  Header="Months In Year" >
+                                <chart:CategoryAxis3D.HeaderStyle>
+                                    <chart:LabelStyle FontFamily="Algerian" FontSize="11" Foreground="Black" >
+                                    </chart:LabelStyle>
+                                </chart:CategoryAxis3D.HeaderStyle>
+                            </chart:CategoryAxis3D>
+                        </chart:SfChart3D.PrimaryAxis>
+
+                        <!--SecondaryAxis y-->
+                        <chart:SfChart3D.SecondaryAxis >
+                            <chart:NumericalAxis3D  Header="Product Quantity">
+                                <chart:NumericalAxis3D.HeaderStyle>
+                                    <chart:LabelStyle FontFamily="Algerian" FontSize="11" Foreground="Black" >
+                                    </chart:LabelStyle>
+                                </chart:NumericalAxis3D.HeaderStyle>
+
+                            </chart:NumericalAxis3D>
+                        </chart:SfChart3D.SecondaryAxis>
+
+
+                        <chart:ColumnSeries3D   x:Name="chartHistogram" Palette="SandyBeach"  ItemsSource="{Binding series, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                XBindingPath="LabelX"  
+                                YBindingPath="LabelY" ShowTooltip="True" Interior="#FFF33A3A"  >
+
+                            <chart:ColumnSeries3D.AdornmentsInfo>
+                                <chart:ChartAdornmentInfo3D ShowLabel="True" >
+                                </chart:ChartAdornmentInfo3D>
+                            </chart:ColumnSeries3D.AdornmentsInfo>
+                        </chart:ColumnSeries3D>
+
+                    </chart:SfChart3D>
+                </Grid>
+
+
+
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
+

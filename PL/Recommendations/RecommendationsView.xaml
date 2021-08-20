@@ -1,0 +1,352 @@
+﻿<UserControl x:Class="PL.Recommendations.RecommendationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+              xmlns:Converters="clr-namespace:PL.Converters"
+             xmlns:local="clr-namespace:PL.Recommendations"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1100">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary  Source="Dictionary1.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <Style TargetType="Calendar" x:Key="myCalendar">
+
+            </Style>
+
+
+            <Converters:BarCodeToImageFile x:Key="BarCodeToImageFile"></Converters:BarCodeToImageFile>
+        <Converters:StoreIdToStoreCityStoreName x:Key="StoreIdToStoreCityStoreName"></Converters:StoreIdToStoreCityStoreName>
+        <Converters:ListProductOrdersToTotalPrice x:Key="ListProductOrdersToTotalPrice"></Converters:ListProductOrdersToTotalPrice>
+        <Converters:BarCodeToProductName x:Key="BarCodeToProductName"></Converters:BarCodeToProductName>
+        <Converters:BarCodeToDescription x:Key="BarCodeToDescription"></Converters:BarCodeToDescription>
+
+        <DropShadowBitmapEffect x:Key="DropShadowButton" Softness="2" ShadowDepth="5" Color="LightGray" Direction="260"/>
+        <Style x:Key="PrimaryButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent">
+            </Setter>
+            <Setter Property="BitmapEffect" Value="{StaticResource DropShadowButton}"/>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="20" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="Black">
+
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Grid x:Name="Grid">
+                            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Fill="Transparent" />
+                            <Border x:Name="Rectangle1" CornerRadius="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                        Width="Auto" Height="Auto"  Background="{TemplateBinding Background}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Horizontal">
+                                <Setter TargetName="Rectangle1" Property="Width" Value="Auto" />
+                                <Setter TargetName="Rectangle1" Property="Height" Value="7" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--ScrollBars-->
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+            <Setter Property="Foreground" Value="LightGray" />
+            <Setter Property="Background" Value="DarkGray" />
+            <Setter Property="Width" Value="10" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid x:Name="GridRoot" Width="19" Background="{x:Null}">
+                            <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="false">
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false" />
+                                </Track.DecreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                                <Setter Value="{DynamicResource ButtonSelectBrush}" TargetName="Thumb" Property="Background" />
+                            </Trigger>
+                            <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                                <Setter Value="{DynamicResource DarkBrush}" TargetName="Thumb" Property="Background" />
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="-90" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Width" Value="Auto" />
+                                <Setter Property="Height" Value="12" />
+                                <Setter TargetName="Thumb" Property="Tag" Value="Horizontal" />
+                                <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
+                                <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--ScrollBars-->
+
+        <!--List-->
+        <Style TargetType="{x:Type ListBoxItem}" x:Key="ListBox" >
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <Grid  >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <!--5 Columns-->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="1.3*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                </Grid.ColumnDefinitions>
+
+
+
+
+
+
+                                <!--> IMAGE PRODUIT   <!-->
+                                <StackPanel  Grid.Column="0" Grid.RowSpan="2"  HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Rectangle   Width="70" Height="60" RadiusX="10" RadiusY="12" Stroke="Black" >
+                                        <Rectangle.Effect>
+                                            <DropShadowEffect ShadowDepth="1"/>
+                                        </Rectangle.Effect>
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="{Binding BarCode, Mode=TwoWay, Converter={StaticResource BarCodeToImageFile}}">
+                                            </ImageBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </StackPanel>
+                                <!-->Source="{Binding BarCode, Mode=TwoWay, Converter={StaticResource BarCodeToImageFile}}"<!-->
+
+
+
+                                <!--> NOM + DESCRIPTION   <!-->
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.RowSpan="2">
+                                    <TextBlock   Text="{Binding BarCode, Mode=TwoWay, Converter={StaticResource BarCodeToProductName}}" VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center" FontSize="16" FontFamily="Georgia" FontWeight="DemiBold" Foreground="#FF59A5E4"     >
+
+                                    </TextBlock>
+
+                                    <TextBlock Text="{Binding BarCode, Mode=TwoWay, Converter={StaticResource BarCodeToDescription}}" VerticalAlignment="Center" 
+                                               HorizontalAlignment="Center" FontSize="15" FontFamily="Georgia"
+                                               FontWeight="Light" >
+
+                                    </TextBlock>
+                                </StackPanel>
+
+
+                                <!--> CHEAPEST + STORE NAME STORE CITY + PRICE  <!-->
+
+                                <Grid Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0" Grid.RowSpan="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel  Orientation="Vertical" >
+                                        <TextBlock  Grid.Row ="0"   Text="Recently Least Expensive in : " FontSize="16" FontFamily="Georgia"  Margin="0,5,0,0" Opacity="0.8" >
+                                        </TextBlock>
+                                        <TextBlock  Grid.Row ="1"  Text="{Binding StoreId, Mode=TwoWay, Converter={StaticResource StoreIdToStoreCityStoreName}}" FontSize="16" FontFamily="Georgia" Margin="0,5,0,0" Opacity="0.8" HorizontalAlignment="Center" >
+                                        </TextBlock>
+                                        <TextBlock     Grid.Row ="2" Text="{Binding CheapUnitPrice, Mode=TwoWay}" FontSize="16" FontFamily="Georgia" Margin="0,5,0,0" Opacity="0.8" HorizontalAlignment="Center" >
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+
+
+
+                                <!--> CHECKBOX  <!-->
+                                <StackPanel Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <CheckBox Grid.Row="0"   IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    </CheckBox>
+                                </StackPanel>
+
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="White"/>
+
+
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+            </ResourceDictionary>
+    </UserControl.Resources>
+
+
+
+
+    <ScrollViewer >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+
+            </Grid.ColumnDefinitions>
+            <!--> TITLES <!-->
+            <Grid Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="120,60,0,0" Background="Transparent">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="Recommendations " FontSize="40" FontFamily="Harrington" TextDecorations="{x:Null}"></TextBlock>
+                        <materialDesign:PackIcon Kind="ScriptTextOutline" VerticalAlignment="Center" Height="40" Width="40" Margin="5 0" />
+                        <materialDesign:PackIcon Kind="FilePdf" VerticalAlignment="Center" Height="40" Width="40" Margin="5 0"  />
+                        <materialDesign:PackIcon Kind="PrinterCheck" VerticalAlignment="Center" Height="40" Width="40" Margin="5 0"  />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Select a day of the next 7 days and get a list of the best product recommendations" FontSize="20" FontStyle="Italic" FontFamily="Harrington" 
+                                   TextDecorations="{x:Null}"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+            </Grid>
+            <!--> TITLES <!-->
+
+            <!-->CALENDAR <!-->
+            <Calendar x:Name="_calendar" SelectedDatesChanged="_calendar_SelectedDatesChanged" 
+                   Grid.Column="1"  Grid.RowSpan="2"   Style="{StaticResource myCalendar}"
+                   Height="260" VerticalAlignment="Top" Margin="0.4,60,0,0"  />
+
+            <!--LIST RECOMMENDATIONS -->
+
+            <Grid Background="#EFF2F8" Height="1450" Grid.Row="1" Grid.ColumnSpan="2">
+
+                <!--TITLE-->
+                <Grid VerticalAlignment="Top" HorizontalAlignment="Center"  Height="60"  Width="500" Margin="0,15,0,0" >
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="Our " FontSize="30" FontFamily="MV Boli" TextDecorations="{x:Null}" FontWeight="DemiBold" Foreground="#FFB91917"/>
+                        <TextBlock Text="{Binding Date,StringFormat=dd/MM/yyyy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="30" FontFamily="MV Boli" TextDecorations="{x:Null}" FontWeight="DemiBold" Foreground="#FFB91917"/>
+                        <TextBlock Text="'s Suggestions" FontSize="30" FontFamily="MV Boli" TextDecorations="{x:Null}" FontWeight="DemiBold" Foreground="#FFB91917"/>
+                    </StackPanel>
+                </Grid>
+
+                <Button Height="40" Width="120" VerticalAlignment="Top" HorizontalAlignment="Right" Background="Transparent" Style="{StaticResource PrimaryButton}"  Margin="0,25,80,0" Command="{Binding CreatePdf}" >
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="File PDF" FontSize="18"></TextBlock>
+                        <TextBlock Text=" " FontSize="18"></TextBlock>
+                        <materialDesign:PackIcon Kind="FilePdf" Height="22" Width="22"    >
+                        </materialDesign:PackIcon>
+                    </StackPanel>
+                </Button>
+
+
+                <!--LIST RECOMMENDATIONS-->
+                <ListBox    x:Name="listRecommendations" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="769" Width="900"  HorizontalAlignment="Center" VerticalAlignment="Top"
+                     ItemsSource="{Binding AllRecommendatedItems}" Background="Transparent" BorderThickness="0"   ItemContainerStyle="{StaticResource ListBox}" Margin="92,81,91.2,0" />
+
+
+
+                <!--TITLE-->
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Center"  Height="60"  Width="500" Margin="70,350,0,0" >
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="Your favorite pair of products" FontSize="30" FontFamily="MV Boli" TextDecorations="{x:Null}" FontWeight="DemiBold" Foreground="#FFB91917"/>
+
+                    </StackPanel>
+                </Grid>
+
+                <!--ASSOCIATION RULES TABLE-->
+                <Grid HorizontalAlignment="Center"  VerticalAlignment="Center"  Margin="0,780,0,0"  Background="#EFF2F8" Height="350">
+
+                    <DataGrid x:Name="listAssociationRules" IsReadOnly="True" CanUserAddRows="False" CanUserResizeColumns="False" CanUserSortColumns="False"   Background="Transparent"
+                                  CanUserDeleteRows="False" CanUserResizeRows="False" CanUserReorderColumns="False"  BorderBrush="#EFF2F8" FontSize="14" ItemsSource="{Binding AllAssociationRules}"
+                                  AutoGenerateColumns="False" EnableRowVirtualization="False"   >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding X}"
+                                                      FontSize="18" FontFamily="MV Boli"     >
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="Product X" FontSize="20" FontWeight="Bold" TextAlignment="Center" Foreground="Red" HorizontalAlignment="Center" FontFamily="MV Boli" >
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding Y}"    
+                                                     FontSize="18" FontFamily="MV Boli"  >
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="Product Y" FontSize="20" FontWeight="Bold" TextAlignment="Center" Foreground="Red" HorizontalAlignment="Center" FontFamily="MV Boli" >
+
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding Confidence}"    
+                                                     FontSize="18" FontFamily="MV Boli"  >
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="Confidence" FontSize="20" FontWeight="Bold" TextAlignment="Center" Foreground="Red" HorizontalAlignment="Center" FontFamily="MV Boli">
+
+                                    </TextBlock>
+                                </DataGridTextColumn.Header>
+
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+
+</UserControl>
