@@ -18,7 +18,6 @@ namespace BE
         public float UnitPrice { get; set; }
         public int StoreId { get; set; }
         public DateTime Date { get; set; }
-
         public Category Category { get; set; } 
         public bool ProductOrderValidation { get; set; } = false;
 

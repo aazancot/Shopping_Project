@@ -6,7 +6,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Analytics Shop" Height="800" Width="1350"  Icon="C:\Shopping_Project\Help pictures/LogoShopZoom.jpg"  AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="Transparent">
+        Title="Analytics Shop" Height="800" Width="1350"  Icon="Welcome Page Pictures/logoShopZoom.jpg"  
+        AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="Transparent">
 
     <Window.Resources>
         <Style x:Key="FocusVisual">

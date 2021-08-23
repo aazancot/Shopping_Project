@@ -150,15 +150,6 @@
       <DependentUpon>RecommendationsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Recommendations\RecommendationsViewModel.cs" />
-    <Compile Include="Test\ChartModel.cs" />
-    <Compile Include="Test\ChartTestUC.xaml.cs">
-      <DependentUpon>ChartTestUC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Test\TestModel.cs" />
-    <Compile Include="Test\TestUC.xaml.cs">
-      <DependentUpon>TestUC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Test\TestViewModel.cs" />
     <Page Include="Analytics\AnalyticsByCategory\AnalyticsByCategoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -224,18 +215,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Recommendations\RecommendationsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Test\ChartTestUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Test\Dictionary1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Test\TestUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -534,6 +513,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Welcome Page Pictures\step2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Welcome Page Pictures\logoShopZoom.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -238,6 +238,8 @@
 
         </Grid>
 
+        <!--LOGO-->
+
         <Rectangle Height="300" Width="250" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,150,0,0" >
             <Rectangle.Effect>
                 <DropShadowEffect Direction="0" BlurRadius="15" ShadowDepth="1" RenderingBias="Quality" Color="LightGray"/>

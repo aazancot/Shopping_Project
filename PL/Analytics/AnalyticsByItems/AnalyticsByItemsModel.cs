@@ -37,6 +37,7 @@ namespace PL.Analytics.AnalyticsByItems
             return BL.GetAllProductOrders(predicate);
         }
 
+        // recuperer les id des produits qui ont ce nom 
         public List<int> GetAllBarCodeByName(string productName)
         {
             return BL.GetAllProducts(x => x.ProductName == productName).Select(x => x.BarCode).ToList();

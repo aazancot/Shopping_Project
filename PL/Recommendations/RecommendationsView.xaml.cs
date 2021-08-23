@@ -67,8 +67,8 @@ namespace PL.Recommendations
             }), DispatcherPriority.Background);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
 
             //List<object[]> items = new List<object[]>();
             //foreach (RecommendatedItems item in recommendationsViewModel.AllRecommendatedItems)
@@ -84,7 +84,7 @@ namespace PL.Recommendations
             //}
             //recommendationsViewModel.CreatePDF2(items);
 
-        }
+        //}
 
     }
 }

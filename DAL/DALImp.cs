@@ -168,7 +168,6 @@ namespace DAL
 
         }
 
-        // updateProductOrder.ProductOrderValidation = true; A mettre true pour validate 
         public void UpdateProductOrder(BE.ProductOrder updateProductOrder)
         {
             using (var ctx = new ShoppingDB())
@@ -200,16 +199,13 @@ namespace DAL
 
         #endregion ProductOrder
 
-
-
-
+        #region Clear
         public void ClearAllData()
         {
 
             using (var ctx = new ShoppingDB())
             {
                
-
                 foreach (var entity in ctx.ProductOrders)
                     ctx.ProductOrders.Remove(entity);
 
@@ -232,6 +228,9 @@ namespace DAL
 
         }
 
+        #endregion Clear
+
+        #region PDF
         public void CreatePDF(List<object[]> items)
         {
             //Create a new PDF document.
@@ -360,6 +359,8 @@ namespace DAL
             //close the document
             //doc.Close(true);
         }
+
+        #endregion PDF
 
 
     }

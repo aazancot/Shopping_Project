@@ -20,29 +20,18 @@ using BL;
 namespace FireBase
 {
 
-    /// <A FAIRE>
-    ///  1. voir comment associer un @ devant le downloadUrl . le downloadUrl etant un string , on veut pouvoir rajouter le @ devant sans prob.
-    ///  2. Pour afficher la date sans les heures, il faut faire .Date.ToShortDateString() ca renvoit un string
-    /// </summary>
-    /// 
+
     class Program
     {
         static void Main(string[] args)
         {
             IDAL dal = new DALImp();
-            //LoadNewQrCodeFirebase(dal);
+            LoadNewQrCodeFirebase(dal);
+            
+           Console.ReadLine();
+         
 
-
-
-            //IBL bl = new BLImp();
-
-            //BE.ProductOrder P = bl.GetAllProductOrders().FirstOrDefault();
-            //P.ProductOrderValidation = false;
-            //bl.UpdateProductOrder(P);
-            // bl.SaveNewProductOrdersFromQrCode();
-
-
-
+            #region Product
             List<BE.Product> listProducts = new List<BE.Product>()
             {
                 // LEGUMES
@@ -398,11 +387,11 @@ namespace FireBase
             //    dal.AddProductToDB(product);
             //}
             //Console.ReadLine();
-            //Console.WriteLine("la fin");
 
 
+            #endregion Product
 
-
+            #region Store 
             // ----------------------------------------------------STORES----------------------------------------
             //List<BE.Store> listStores = new List<BE.Store>()
             //{
@@ -473,10 +462,9 @@ namespace FireBase
             //    Console.ReadLine();
 
 
+            #endregion Store
 
-
-
-
+            #region ProductOrder
             // ----------------------------------------------------PRODUCT ORDERS----------------------------------------
 
 
@@ -1374,42 +1362,33 @@ namespace FireBase
                     new ProductOrder { BarCode = 198, Count= 1,  UnitPrice= (float) 279, StoreId=35, Date=DateTime.Parse("12/04/2021"), Category = Category.Multimedia, ProductOrderValidation = true },
                     new ProductOrder { BarCode = 199, Count= 1,  UnitPrice= (float) 271, StoreId=39, Date=DateTime.Parse("03/02/2021"), Category = Category.Multimedia, ProductOrderValidation = true },
                 };
+            List<ProductOrder> productOrdersList9 = new List<ProductOrder>
+            {
+                  new ProductOrder { BarCode = 202, Count= 2,  UnitPrice= (float) 379, StoreId=41, Date=DateTime.Parse("17/08/2021"), Category = Category.Multimedia, ProductOrderValidation = false},
+                  new ProductOrder { BarCode = 203, Count= 1,  UnitPrice= (float) 2990, StoreId=41, Date=DateTime.Parse("16/08/2021"), Category = Category.Multimedia, ProductOrderValidation = false },
+            };
 
-            //foreach (var item in productOrdersList8)
+            //foreach (var item in productOrdersList9)
             //{
             //    dal.AddProductOrderToDB(item);
             //}
 
 
-            // a partir de bar code 199 on a pas rentrer 
+           
 
+            #endregion ProductOrder
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         // mettre des photos de qr code generator dans le firebase 
         public async static Task LoadNewQrCodeFirebase(IDAL dal)
         {
-            var stream = File.Open(@"C:\Shopping_Project\qr_code\0001.png", FileMode.Open);
+            var stream = File.Open(@"C:\Shopping_Project\qr_code\209.png", FileMode.Open);
 
             // Construct FirebaseStorage with path to where you want to upload the file and put it there
             var task = new FirebaseStorage("anna-avital-project-2021.appspot.com")
-             .Child("0001.png")
+             .Child("209.png")
              .PutAsync(stream);
 
             // Track progress of the upload
@@ -1419,9 +1398,7 @@ namespace FireBase
             var downloadUrl = await task;
 
             Console.WriteLine(downloadUrl);
-            BE.Url newUrl = new BE.Url { DownloadUrl = downloadUrl };
-
-
+            BE.Url newUrl = new BE.Url { DownloadUrl = downloadUrl }; // new object url 
 
             //envoie l'url de la photo au DAL pour le sauvegarder dans le DB
             try
@@ -1435,7 +1412,10 @@ namespace FireBase
 
         }
 
+        // product order ou le magasin et le product existent deja - normal
+        // product order ou le produit n existe pas et le magasin - verifier photo et categorie
 
+        #region test 
         // dechiffrer le qr code et tranformer le string qu on a dechiffre en qr code object
         private static void showDetails(string downloadUrl)
         {
@@ -1465,7 +1445,13 @@ namespace FireBase
             dal.ClearAllData();
 
         }
-    } 
+        //IBL bl = new BLImp();
+        //BE.ProductOrder P = bl.GetAllProductOrders().FirstOrDefault();
+        //P.ProductOrderValidation = false;
+        //bl.UpdateProductOrder(P);
+        // bl.SaveNewProductOrdersFromQrCode();
+        #endregion test
+    }
 }
 
 

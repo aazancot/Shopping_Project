@@ -37,7 +37,7 @@ namespace BL
                 if (resultDetails != null)
                 {
                     QrCode qR = JsonConvert.DeserializeObject<QrCode>(resultDetails); // tranformation en qr code object
-                    LoadNewObjects(qR); //nouveaux objets
+                    LoadNewObjects(qR); //nouveaux objets et ajout ds DB 
                 }   
             }
             //on supprime tous les Url de la DB.
@@ -45,7 +45,7 @@ namespace BL
 
             // on recupere tous les nouveaux product order avec Validate= false 
             
-               List<ProductOrder> orderList =  GetAllProductOrders(x => x.ProductOrderValidation == false).OrderByDescending(x=>x.Date).ToList();
+            List<ProductOrder> orderList =  GetAllProductOrders(x => x.ProductOrderValidation == false).OrderByDescending(x=>x.Date).ToList();
 
             return orderList;
 
@@ -80,8 +80,7 @@ namespace BL
             dal.AddProductOrderToDB(newProductOrder);
         }
 
-        // on sort le string avec les donnees du qrcode 
-        // CA MARCHE
+        // on sort le string avec les donnees du qrcode
         public string decryptUrlToDetailsFromQrCode(string downloadUrl)
         { 
 
@@ -104,7 +103,7 @@ namespace BL
    
         #region ProductOrder
 
-        public double GetPriceWithCount(BE.ProductOrder productOrder)
+        public double GetPriceWithCount(BE.ProductOrder productOrder) // no use 
         {
             return productOrder.Count * productOrder.UnitPrice;
         }
@@ -122,27 +121,22 @@ namespace BL
                           select g.ToList();
 
 
-
                           //new { order = g.ToList() }; //idDate = g.Key.Date, idStore = g.Key.StoreId,
 
            return results.ToList();
 
         }
 
-        public List<int> GetAllOrderYears()
+        public List<int> GetAllOrderYears() // no use 
         {
             return GetAllProductOrders().Select(x => x.Date.Year).Distinct().OrderBy(x => x).ToList();
   
         }
-
-
         public void AddProductOrder(BE.ProductOrder newProductOrder) => dal.AddProductOrderToDB(newProductOrder);
         public void DeleteProductOrder(int productOrderId) => dal.DeleteProductOrder(productOrderId);
-
         public void UpdateProductOrder(BE.ProductOrder updateProductOrder) => dal.UpdateProductOrder(updateProductOrder);
 
         #endregion ProductOrder
-
 
 
         #region Product 
@@ -170,7 +164,6 @@ namespace BL
         #endregion Store 
 
         #region Category
-
         public List<Category> GetAllCategories()
         {
             List<Category> allCategories = new List<Category>();
@@ -188,7 +181,7 @@ namespace BL
 
         public AssociationRule<Product>[] GetAssociationRules()
         {
-            var tempArr = from po in GetAllProductOrders()
+            var tempArr = from po in GetAllProductOrders(x=>x.Category == BE.Category.Food)
                            group po by new { po.Date } into g
                            select g.ToArray();
             

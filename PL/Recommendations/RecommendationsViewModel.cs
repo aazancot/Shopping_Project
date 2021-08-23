@@ -47,7 +47,7 @@ namespace PL.Recommendations
         public List<AssociationRules> GetAllAssociationRules()
         {
             List<AssociationRules> result = new List<AssociationRules>();
-            AssociationRule<Product>[] associationRules = RecommendationsModel.GetAssociationRules();
+            AssociationRule<Product>[] associationRules = RecommendationsModel.GetAssociationRules().Where(x=>x.Confidence>0.5).ToArray();
             foreach (var item in associationRules)
             {
                 AssociationRules newRule = new AssociationRules();

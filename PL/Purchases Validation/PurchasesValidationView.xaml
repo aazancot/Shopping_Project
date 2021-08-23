@@ -51,12 +51,6 @@
         </Style>
 
 
-
-
-
-
-
-
         <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>

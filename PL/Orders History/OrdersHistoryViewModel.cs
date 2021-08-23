@@ -40,7 +40,8 @@ namespace PL.Orders_History
             List<Order> orderedList =  AllOrders.OrderByDescending(x=>x.Date).ToList();
             if(selectedDate == null)
             {
-                return orderedList;
+                List<Order> orderedListLastMonth = orderedList.Where(x=>x.Date.Month==DateTime.Now.Month).Select(x=>x).ToList();
+                return orderedListLastMonth;
             }
             else
             {

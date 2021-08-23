@@ -39,7 +39,6 @@ namespace PL.Recommendations
         public int TotalCount { get; set; }
         public int StoreId { get; set; }
         public string CheapUnitPrice { get; set; }
-
         public bool IsChecked { get; set; }
 
     }
@@ -52,7 +51,6 @@ namespace PL.Recommendations
 
         public bool Equals(AssociationRules other)
         {
-
             //Check whether the compared object is null.
             if (Object.ReferenceEquals(other, null)) return false;
 
@@ -62,23 +60,16 @@ namespace PL.Recommendations
             //Check whether the products' properties are equal.
             return X.Equals(other.X) && Y.Equals(other.Y) && Confidence.Equals(other.Confidence);
         }
-
         // If Equals() returns true for a pair of objects
-    // then GetHashCode() must return the same value for these objects.
+        // then GetHashCode() must return the same value for these objects.
     
         public override int GetHashCode()
         {
-
-            
             int hashX = X == null ? 0 : X.GetHashCode();
-
-          
+      
             int hashY = Y.GetHashCode();
-
-            
+          
             int hashConfidence = Confidence.GetHashCode();
-
-            
 
             return hashX ^ hashY ^ hashConfidence ;
         }

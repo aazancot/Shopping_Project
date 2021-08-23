@@ -22,7 +22,7 @@
             </Style>
 
 
-            <Converters:BarCodeToImageFile x:Key="BarCodeToImageFile"></Converters:BarCodeToImageFile>
+        <Converters:BarCodeToImageFile x:Key="BarCodeToImageFile"></Converters:BarCodeToImageFile>
         <Converters:StoreIdToStoreCityStoreName x:Key="StoreIdToStoreCityStoreName"></Converters:StoreIdToStoreCityStoreName>
         <Converters:ListProductOrdersToTotalPrice x:Key="ListProductOrdersToTotalPrice"></Converters:ListProductOrdersToTotalPrice>
         <Converters:BarCodeToProductName x:Key="BarCodeToProductName"></Converters:BarCodeToProductName>
@@ -283,7 +283,8 @@
                     </StackPanel>
                 </Grid>
 
-                <Button Height="40" Width="120" VerticalAlignment="Top" HorizontalAlignment="Right" Background="Transparent" Style="{StaticResource PrimaryButton}"  Margin="0,25,80,0" Command="{Binding CreatePdf}" >
+                <Button Height="40" Width="120" VerticalAlignment="Top" HorizontalAlignment="Right" Background="Transparent" Style="{StaticResource PrimaryButton}"  Margin="0,25,80,0"
+                        Command="{Binding CreatePdf}" >
 
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="File PDF" FontSize="18"></TextBlock>

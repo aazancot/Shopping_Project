@@ -102,9 +102,6 @@
 
             <BooleanToVisibilityConverter x:Key="btv" />
 
-           
-
-
             <!-- style a top level menu item -->
             <ControlTemplate x:Key="VsMenuTop" TargetType="MenuItem">
                 <StackPanel TextBlock.FontSize="15px"  Height="45" Orientation="Horizontal" TextBlock.FontFamily="Georgia"  Opacity="0.9" >
